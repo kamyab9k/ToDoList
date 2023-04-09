@@ -32,7 +32,9 @@ class TodoAdapter(
 //            }
 
             cbDone.setOnCheckedChangeListener { button, isChecked ->
-                if (!isChecked){ onItemClicked()}
+                if (!isChecked) {
+                    onItemClicked()
+                }
 
 
             }
