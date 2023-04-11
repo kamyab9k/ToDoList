@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.test.core.app.ApplicationProvider
@@ -28,10 +29,15 @@ class AddTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val viewModel1 = ViewModelProvider(this)[ToDoViewModel::class.java]
         _binding?.submitButton?.setOnClickListener {
-            viewModel1.addToDo(ToDo(_binding!!.newTask.text.toString(), false))
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            intent.putExtra("key",true)
-            startActivity(intent)
+            if (_binding!!.newTask.text.isNotEmpty()) {
+                viewModel1.addToDo(ToDo(_binding!!.newTask.text.toString(), false))
+                val intent = Intent(requireContext(), MainActivity::class.java)
+                intent.putExtra("key", true)
+                startActivity(intent)
+            } else {
+                Toast.makeText(requireContext(), "please enter your ToDo", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 

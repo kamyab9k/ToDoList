@@ -28,7 +28,7 @@ class ToDoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val viewModel = ViewModelProvider(this)[ToDoViewModel::class.java]
-        viewModel.addToDo(ToDo("test", true))
+
         val adapter = TodoAdapter(viewModel.getToDoList())
         adapter.onItemClicked = {
             viewModel.deleteToDo(ToDo("test1", false))

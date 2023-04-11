@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="pistachio">#809536</color>
     <color name="grey">#747575</color>
+    <color name="darkPurple">#241623</color>
+    <color name="newBlack">#231f20</color>
 </resources>

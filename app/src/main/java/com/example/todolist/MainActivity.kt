@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.fragmentContainerView, ToDoFragment(), "ToDoList")
             .commit()
 
-        supportActionBar?.title = "Your ToDo List"
+        supportActionBar?.title = "Your Tasks"
 
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }

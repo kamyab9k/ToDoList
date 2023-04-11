@@ -8,7 +8,7 @@ import com.example.todolist.databinding.ItemTodoBinding
 
 
 class TodoAdapter(
-    var todos: List<ToDo>,
+    var todoList: List<ToDo>,
 
     ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
     lateinit var onItemClicked: (() -> Unit)
@@ -24,14 +24,15 @@ class TodoAdapter(
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.binding.apply {
-            tvTitle.text = todos[position].tile
-            cbDone.isChecked = todos[position].isChecked
+            tvTitle.text = todoList[position].title
+            cbDone.isChecked = todoList[position].isChecked
 //
 //            cbDone.setOnCheckedChangeListener { button, isChecked ->
 //                onItemClicked()
 //            }
 
-            cbDone.setOnCheckedChangeListener { button, isChecked ->
+            cbDone.setOnCheckedChangeListener { _, isChecked ->
+                todoList[position].isChecked=isChecked
                 if (!isChecked) {
                     onItemClicked()
                 }
@@ -42,7 +43,7 @@ class TodoAdapter(
     }
 
     override fun getItemCount(): Int {
-        return todos.size
+        return todoList.size
     }
 
 }
