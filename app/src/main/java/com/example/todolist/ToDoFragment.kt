@@ -14,6 +14,7 @@ import com.example.todolist.databinding.FragmentRvBinding
 
 class ToDoFragment : Fragment() {
     private var _binding: FragmentRvBinding? = null
+    lateinit var viewModel: ToDoViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,27 +28,42 @@ class ToDoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProvider(this)[ToDoViewModel::class.java]
+        viewModel = ViewModelProvider(this)[ToDoViewModel::class.java]
 
-        val adapter = TodoAdapter(viewModel.getToDoList())
-        adapter.onItemClicked = {
-            viewModel.deleteToDo(ToDo("test1", false))
-        }
+        viewModel.getToDoList()
+        observeData()
+
         _binding?.rvTodos?.addItemDecoration(
             DividerItemDecoration(
                 context,
                 DividerItemDecoration.VERTICAL
             )
         )
-        _binding!!.rvTodos.adapter = adapter
-        _binding!!.rvTodos.layoutManager = LinearLayoutManager(requireContext())
 
         _binding!!.addFabAndroid.setOnClickListener {
             val transaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.fragmentContainerView, AddTaskFragment())
                 .commit()
         }
+    }
 
+    private fun observeData() {
+        viewModel.apply {
+            todoListLiveData.observe(viewLifecycleOwner) {
+                it?.let { initAdapter(it) }
+            }
+        }
+    }
+
+    private fun initAdapter(todolist: MutableList<ToDo>) {
+        val adapter = TodoAdapter(todolist)
+        adapter.onItemClicked = {
+            viewModel.deleteToDo(ToDo("test delete", false))
+        }
+        _binding!!.rvTodos.adapter = adapter
+        _binding!!.rvTodos.layoutManager = LinearLayoutManager(requireContext())
+    }
+}
 
 //
 //            val title = _binding!!.etTODO.text.toString()
@@ -58,12 +74,6 @@ class ToDoFragment : Fragment() {
 //                        - 1
 //            )
 //        }
-
-
-    }
-}
-
-
 
 
 
