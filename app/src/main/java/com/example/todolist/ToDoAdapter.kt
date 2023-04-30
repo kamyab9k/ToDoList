@@ -14,7 +14,25 @@ class TodoAdapter(
     lateinit var onItemClicked: ((ToDo) -> Unit)
 
     inner class TodoViewHolder(val binding: ItemTodoBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.cbDone.setOnCheckedChangeListener { _, isChecked ->
+                todoList[bindingAdapterPosition].isChecked = isChecked
+
+                if (isChecked) {
+                    binding.tvTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+
+                } else {
+                    binding.tvTitle.paintFlags =
+                        binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                }
+            }
+            binding.deleteButton.setOnClickListener {
+                onItemClicked(todoList[bindingAdapterPosition])
+                notifyItemRemoved(bindingAdapterPosition)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,6 +42,7 @@ class TodoAdapter(
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.binding.apply {
+
             tvTitle.text = todoList[position].title
             cbDone.isChecked = todoList[position].isChecked
 
@@ -32,21 +51,6 @@ class TodoAdapter(
             } else {
                 tvTitle.paintFlags = tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
-
-            cbDone.setOnCheckedChangeListener { _, isChecked ->
-                todoList[position].isChecked = isChecked
-
-                if (isChecked) {
-                    tvTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-
-                } else {
-                    tvTitle.paintFlags = tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-                }
-            }
-            deleteButton.setOnClickListener {
-                onItemClicked(todoList[position])
-                notifyItemRemoved(position)
-            }
         }
     }
 
@@ -54,3 +58,4 @@ class TodoAdapter(
         return todoList.size
     }
 }
+
