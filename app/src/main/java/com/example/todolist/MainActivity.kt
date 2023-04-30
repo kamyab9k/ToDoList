@@ -13,43 +13,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         supportFragmentManager
             .beginTransaction()
             .add(R.id.fragmentContainerView, ToDoFragment(), "ToDoList")
             .commit()
 
         supportActionBar?.title = "Your Tasks"
-
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onBackPressed() {
-
         supportFragmentManager.popBackStack();
         super.onBackPressed()
     }
-
 }
 
-
-//    override fun onContextItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            android.R.id.home -> {
-//                finish()
-//                return true
-//            }
-//        }
-//        return super.onContextItemSelected(item)
-//    }
-
-
-//        supportActionBar?.apply {
-//            setDisplayHomeAsUpEnabled(true)
-//           setDisplayShowHomeEnabled(true)
-//        }
 
 

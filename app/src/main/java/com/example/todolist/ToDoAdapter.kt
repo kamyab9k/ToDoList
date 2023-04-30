@@ -3,14 +3,15 @@ package com.example.todolist
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ItemTodoBinding
 
 class TodoAdapter(
     var todoList: List<ToDo>,
+) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-    ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
-    lateinit var onItemClicked: (() -> Unit)
+    lateinit var onItemClicked: ((ToDo) -> Unit)
 
     inner class TodoViewHolder(val binding: ItemTodoBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -31,14 +32,10 @@ class TodoAdapter(
             } else {
                 tvTitle.paintFlags = tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
-//
-//            cbDone.setOnCheckedChangeListener { button, isChecked ->
-//                onItemClicked()
-//            }
 
             cbDone.setOnCheckedChangeListener { _, isChecked ->
                 todoList[position].isChecked = isChecked
-                onItemClicked()
+
                 if (isChecked) {
                     tvTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 
@@ -46,11 +43,14 @@ class TodoAdapter(
                     tvTitle.paintFlags = tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 }
             }
+            deleteButton.setOnClickListener {
+                onItemClicked(todoList[position])
+                notifyItemRemoved(position)
+            }
         }
     }
 
     override fun getItemCount(): Int {
         return todoList.size
     }
-
 }

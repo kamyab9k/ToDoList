@@ -30,4 +30,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/deleteButton"
+        android:layout_width="27dp"
+        android:layout_height="34dp"
+        android:layout_marginRight="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cbDone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_delete_forever_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

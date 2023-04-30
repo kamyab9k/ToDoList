@@ -13,14 +13,12 @@ class ToDoViewModel : ViewModel() {
         _todoListLiveData.postValue(ToDoRepository.getToDoList())
     }
 
-
-    fun deleteToDo(myDelete: ToDo) {
+    fun deleteToDo(myTodo: ToDo) {
         println("delete is called")
-//        myTodoList.remove(myDelete)
+        ToDoRepository.delete(myTodo)
     }
 
     fun addToDo(myTodo: ToDo) {
         ToDoRepository.addToDo(myTodo)
     }
-
 }

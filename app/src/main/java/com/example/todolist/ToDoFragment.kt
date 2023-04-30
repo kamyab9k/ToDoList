@@ -29,7 +29,6 @@ class ToDoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this)[ToDoViewModel::class.java]
-
         viewModel.getToDoList()
         observeData()
 
@@ -58,22 +57,13 @@ class ToDoFragment : Fragment() {
     private fun initAdapter(todolist: MutableList<ToDo>) {
         val adapter = TodoAdapter(todolist)
         adapter.onItemClicked = {
-            viewModel.deleteToDo(ToDo("test delete", false))
+            viewModel.deleteToDo(it)
         }
         _binding!!.rvTodos.adapter = adapter
         _binding!!.rvTodos.layoutManager = LinearLayoutManager(requireContext())
     }
 }
 
-//
-//            val title = _binding!!.etTODO.text.toString()
-//            val todo = ToDo(title, false)
-//            todoList.add(todo)
-//            adapter.notifyItemInserted(
-//                todoList.size
-//                        - 1
-//            )
-//        }
 
 
 
