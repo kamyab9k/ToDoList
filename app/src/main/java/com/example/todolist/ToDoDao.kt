@@ -1,5 +1,6 @@
 package com.example.todolist
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
@@ -11,9 +12,8 @@ import androidx.room.Upsert
 interface ToDoDao {
 
     @Query("SELECT * FROM user")
-    fun getToDoListDao(): MutableList<ToDo> {
-        return myTodoList
-    }
+    fun getToDoListDao(): LiveData<List<ToDo>>
+
 
     @Upsert
     fun upsertToDoO(myTodo: ToDo) {
