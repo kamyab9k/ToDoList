@@ -2,20 +2,17 @@ package com.example.todolist
 
 import androidx.lifecycle.LiveData
 
+class ToDoRepository(private val dao: ToDoDao) {
 
-class ToDoRepository(private val dao:ToDoDao) {
-
-    val allToDo:  LiveData<List<ToDo>> = dao.getToDoListDao()
-
-//    fun getToDoList(): MutableList<ToDo> {
-//       return dao.getToDoListDao()
-//    }
-
-    fun addToDo(myTodo: ToDo) {
-        dao.upsertToDoO(myTodo)
+    fun getToDoList(): LiveData<List<ToDo>> {
+      return dao.getToDoListDao()
     }
 
-    fun delete(todo: ToDo) {
+    suspend fun addToDo(myTodo: ToDo) {
+        dao.insert(myTodo)
+    }
+
+    suspend fun delete(todo: ToDo) {
         dao.delete(todo)
     }
 }

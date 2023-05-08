@@ -1,6 +1,5 @@
 package com.example.todolist
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.test.core.app.ApplicationProvider
 import com.example.todolist.databinding.FragmentAddTaskBinding
 
-
 class AddTaskFragment : Fragment() {
+
+    private val todoViewModel: ToDoViewModel by viewModels()
 
     private var _binding: FragmentAddTaskBinding? = null
 
@@ -27,10 +27,10 @@ class AddTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel1 = ViewModelProvider(this)[ToDoViewModel::class.java]
+
         _binding?.submitButton?.setOnClickListener {
             if (_binding!!.newTask.text.isNotEmpty()) {
-                viewModel1.addToDo(ToDo(_binding!!.newTask.text.toString(), false))
+                todoViewModel.addToDo(ToDo(_binding!!.newTask.text.toString(), false))
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 intent.putExtra("key", true)
                 startActivity(intent)

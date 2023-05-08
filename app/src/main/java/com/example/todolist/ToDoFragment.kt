@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -29,7 +28,6 @@ class ToDoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this)[ToDoViewModel::class.java]
-        viewModel.getToDoList()
         observeData()
 
         _binding?.rvTodos?.addItemDecoration(
@@ -54,7 +52,7 @@ class ToDoFragment : Fragment() {
         }
     }
 
-    private fun initAdapter(todolist: MutableList<ToDo>) {
+    private fun initAdapter(todolist: List<ToDo>) {
         val adapter = TodoAdapter(todolist)
         adapter.onItemClicked = {
             viewModel.deleteToDo(it)

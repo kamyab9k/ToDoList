@@ -3,25 +3,22 @@ package com.example.todolist
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Upsert
-
- val myTodoList = mutableListOf<ToDo>()
+import androidx.room.Update
+import com.example.todolist.ToDo
 
 @Dao
 interface ToDoDao {
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM todoTable")
     fun getToDoListDao(): LiveData<List<ToDo>>
 
-
-    @Upsert
-    fun upsertToDoO(myTodo: ToDo) {
-        myTodoList.add(myTodo)
-    }
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(todo : ToDo)
 
     @Delete
-    fun delete(todo: ToDo) {
-        myTodoList.remove(todo)
-    }
+    suspend fun delete(todo: ToDo)
+
 }
