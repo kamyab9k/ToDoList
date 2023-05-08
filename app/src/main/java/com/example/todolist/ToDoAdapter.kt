@@ -13,7 +13,7 @@ class TodoAdapter(
     var todoList: List<ToDo>,
 ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
-    private val todoViewModel= ToDoViewModel(application = Application())
+    private val todoViewModel = ToDoViewModel(application = Application())
     lateinit var onItemClicked: ((ToDo) -> Unit)
 
 
@@ -23,11 +23,12 @@ class TodoAdapter(
             binding.cbDone.setOnCheckedChangeListener { _, isChecked ->
                 todoList[bindingAdapterPosition].isChecked = isChecked
 
-//            todoViewModel.updateToDo(todoList[bindingAdapterPosition])
+                if (binding.cbDone.isPressed) {
+                    todoViewModel.updateToDo(todoList[bindingAdapterPosition])
+                }
 
                 if (isChecked) {
                     binding.tvTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-
                 } else {
                     binding.tvTitle.paintFlags =
                         binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
