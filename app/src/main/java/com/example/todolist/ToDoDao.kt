@@ -21,4 +21,7 @@ interface ToDoDao {
     @Delete
     suspend fun delete(todo: ToDo)
 
+    @Update
+    suspend fun update(todo: ToDo)
+
 }

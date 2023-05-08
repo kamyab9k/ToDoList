@@ -8,10 +8,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ToDoViewModel (application: Application) : AndroidViewModel(application) {
+class ToDoViewModel(application: Application) : AndroidViewModel(application) {
 
     val todoListLiveData: LiveData<List<ToDo>>
-    private val repository : ToDoRepository
+    private val repository: ToDoRepository
 
     init {
         val dao = ToDoDatabase.getDatabase(application).getTodosDao()
@@ -20,14 +20,20 @@ class ToDoViewModel (application: Application) : AndroidViewModel(application) {
     }
 
     fun deleteToDo(myTodo: ToDo) {
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.delete(myTodo)
         }
     }
 
     fun addToDo(myTodo: ToDo) {
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.addToDo(myTodo)
+        }
+    }
+
+    fun updateToDo(toDo: ToDo) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.update(toDo)
         }
     }
 }
